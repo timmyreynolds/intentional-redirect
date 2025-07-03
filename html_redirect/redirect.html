@@ -83,6 +83,18 @@
       </ul>
     </div>
     <p>Remember: Each moment is an opportunity to choose what matters most.</p>
+    iv class="mind-clear-section">
+  <h3>Clear Your Mind</h3>
+  <textarea id="mindTextBox" rows="4" cols="50" placeholder="Write your thoughts here..."></textarea>
+  <br>
+  <button class="clear-btn" onclick="clearMind()">Clear Your Mind</button>
+</div>
+
+<script>
+  function clearMind() {
+    document.getElementById('mindTextBox').value = '';
+  }
+</script>
     <button class="refresh-btn" onclick="location.reload()">Refresh Reflection</button>
   </div>
 </body>

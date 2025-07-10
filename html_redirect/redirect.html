@@ -5,67 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pause and Reflect</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 600px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 30px;
-      text-align: center;
-    }
-    h1 {
-      margin-top: 0;
-      color: #6c63ff;
-    }
-    ol {
-      text-align: left;
-      margin: 20px 0;
-      padding-left: 20px;
-    }
-    .prompts {
-      margin: 20px 0;
-      padding: 15px;
-      border-left: 4px solid #6c63ff;
-      background-color: #f0f0ff;
-      text-align: left;
-    }
-    .prompts h3 {
-      margin-top: 0;
-    }
-    .prompts ul {
-      padding-left: 20px;
-    }
-    .refresh-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #6c63ff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      text-decoration: none;
-    }
-    .refresh-btn:hover {
-      background-color: #5a52d4;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; padding: 20px; }
+    .container { max-width: 600px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 30px; text-align: center; }
+    h1 { margin-top: 0; color: #6c63ff; }
+    textarea { width: 100%; height: 100px; margin: 15px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: vertical; font-size: 16px; }
+    button { display: inline-block; margin: 10px; padding: 10px 20px; background-color: #6c63ff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { background-color: #5a52d4; }
+    a { color: #6c63ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Pause and Reflect</h1>
+    <h2>Clear Your Mind</h2>
+    <textarea id="clearText" placeholder="Write what’s on your mind..."></textarea>
+    <br>
+    <button id="clearBtn">Save Entry</button>
+    <button onclick="location.href='entries.html'">View Entries</button>
+    <hr>
     <h2>Your Priorities</h2>
     <ol>
       <li>Show up fully to the world</li>
@@ -82,19 +40,20 @@
         <li>Would a brief meditation be helpful? 5 minutes can change a day</li>
       </ul>
     </div>
-    <div class="mind-clear-section">
-  <h3>Clear Your Mind</h3>
-    <textarea id="mindTextBox" rows="4" cols="50" placeholder="What intention do you have right now?"></textarea>
-    <br>
-    <button class="clear-btn" onclick="clearMind()">Clear Your Mind</button>
-    </div>
-
-    <script>
-    function clearMind() {
-        document.getElementById('mindTextBox').value = '';
-    }
-    </script>
-    <!-- <button class="refresh-btn" onclick="location.reload()">Refresh Reflection</button> -->
+    <p><a href="entries.html">See all saved reflections →</a></p>
   </div>
+  <script>
+    document.getElementById('clearBtn').addEventListener('click', function() {
+      const textEl = document.getElementById('clearText');
+      const text = textEl.value.trim();
+      if (!text) return alert('Please write something first.');
+      // Retrieve existing entries or start a new array
+      const entries = JSON.parse(localStorage.getItem('entries') || '[]');
+      entries.push({ text, timestamp: new Date().toISOString() });
+      localStorage.setItem('entries', JSON.stringify(entries));
+      textEl.value = '';
+      alert('Entry saved!');
+    });
+  </script>
 </body>
 </html>
